@@ -9,7 +9,7 @@ public class Health : MonoBehaviour
     private bool knockbackActive = false;
     [SerializeField] private float knockbackDuration = 0.3f;
     [SerializeField] private float knockbackForce = 20f;
-
+    private FlashScript flash;
     void Start()
     {
         health = maxHealth;
@@ -19,6 +19,7 @@ public class Health : MonoBehaviour
         {
             Debug.LogError("Rigidbody2D not found on " + gameObject.name);
         }
+        flash = GetComponent<FlashScript>();
     }
     public bool IsKnockbackActive()
     {
@@ -31,7 +32,7 @@ public class Health : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("Enemy collision detected");
-
+            flash.Flash();
             Vector2 knockbackDir = (transform.position - collision.transform.position).normalized;
             knockbackDir += new Vector2(0f, .3f);
                

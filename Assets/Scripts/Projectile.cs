@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
     private BoxCollider2D bc;
     private float lifeTime;
     private Vector3 direction;
+    [SerializeField] private int damage = 1;
   
     private void Awake()
     {
@@ -28,7 +29,7 @@ public class Projectile : MonoBehaviour
         if (lifeTime > 5) gameObject.SetActive(false);
     }
     private void OnTriggerEnter2D(Collider2D collision)
-    {
+    {   
         if (collision.tag != "Player")
         {
             hit = true;
@@ -37,7 +38,9 @@ public class Projectile : MonoBehaviour
         }
         if (collision.tag == "Enemy")
         {
-            Destroy(collision.gameObject);
+            EnemyBehaviour enemy = collision.GetComponent<EnemyBehaviour>();
+            enemy.loseHealth(damage);
+            
         }
         
     }
